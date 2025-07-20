@@ -1,0 +1,7 @@
+src/index.css
+src/App.css
+*.css
+**/*.css
+dist/
+node_modules/
+public/

@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
-import { Icon } from "./icon";
+import { Icon } from "./Icon";
 import { Text } from "./Text";
 
 export const buttonVariants = cva(
@@ -24,7 +24,7 @@ export const buttonVariants = cva(
 			size: "md",
 			disabled: false,
 		},
-	},
+	}
 );
 
 export const buttonIconVariants = cva("transition", {

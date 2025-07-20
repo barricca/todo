@@ -30,6 +30,6 @@ export function Text({
 	return React.createElement(
 		as,
 		{ className: textVariants({ variant, className }), ...props },
-		children,
+		children
 	);
 }

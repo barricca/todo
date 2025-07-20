@@ -18,7 +18,7 @@ export const badgeVariants = cva(
 			variant: "primary",
 			size: "sm",
 		},
-	},
+	}
 );
 
 export const badgeTextVariants = cva("", {
