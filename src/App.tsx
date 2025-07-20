@@ -8,6 +8,7 @@ import XIcon from "./assets/icons/x.svg?react";
 import { Badge } from "./components/Badge";
 import { Button } from "./components/Button";
 import { ButtonIcon } from "./components/ButtonIcon";
+import { Card } from "./components/Card";
 import { Icon } from "./components/Icon";
 import { InputCheckbox } from "./components/InputCheckbox";
 import { InputText } from "./components/InputText";
@@ -55,6 +56,10 @@ export function App() {
 
 			<div>
 				<InputCheckbox />
+			</div>
+
+			<div>
+				<Card size="md">Olá Mundo</Card>
 			</div>
 		</div>
 	);
