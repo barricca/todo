@@ -13,7 +13,7 @@ import { InputText } from "../components/InputText";
 import { Text } from "../components/Text";
 
 export function TaskItem() {
-	const [isEditing, setIsEditing] = useState(true);
+	const [isEditing, setIsEditing] = useState(false);
 
 	function handleEditTask() {
 		setIsEditing(true);
