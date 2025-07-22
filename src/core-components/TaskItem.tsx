@@ -58,7 +58,7 @@ export function TaskItem({ task }: TaskItemProps) {
 			{!isEditing ? (
 				<div className="flex items-center gap-4">
 					<InputCheckbox
-						checked={task?.concluded}
+						checked={task?.concluded ?? false}
 						onChange={handleChangeTaskStatus}
 					/>
 					<Text

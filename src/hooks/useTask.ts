@@ -10,6 +10,7 @@ export function useTask() {
 			{
 				id: crypto.randomUUID(),
 				title: "",
+				concluded: false,
 				state: TaskState.Creating,
 			},
 		]);
