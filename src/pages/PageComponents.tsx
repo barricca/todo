@@ -46,6 +46,9 @@ export function PageComponents() {
 
 				<div>
 					<Button icon={PlusIcon}>Nova Tarefa</Button>
+					<Button icon={PlusIcon} handling>
+						Criando...
+					</Button>
 				</div>
 
 				<div className="flex gap-1">
@@ -53,10 +56,11 @@ export function PageComponents() {
 					<ButtonIcon icon={TrashIcon} variant="secondary" />
 					<ButtonIcon icon={TrashIcon} variant="tertiary" />
 					<ButtonIcon icon={TrashIcon} loading />
+					<ButtonIcon icon={TrashIcon} handling />
 				</div>
 
 				<div>
-					<InputText placeholder="Digite sua tarefa" />
+					<InputText />
 				</div>
 
 				<div>
@@ -68,7 +72,7 @@ export function PageComponents() {
 					<Card size="md">Olá Mundo</Card>
 				</div>
 
-				<div className="space-y2">
+				<div className="space-y-2">
 					<Skeleton className="h-6" />
 					<Skeleton className="h-6" />
 					<Skeleton className="w-96 h-6" />

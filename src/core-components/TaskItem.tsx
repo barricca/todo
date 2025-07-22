@@ -8,33 +8,35 @@ import { ButtonIcon } from "../components/ButtonIcon";
 import { Card } from "../components/Card";
 import { InputCheckbox } from "../components/InputCheckbox";
 import { InputText } from "../components/InputText";
+import { Skeleton } from "../components/Skeleton";
 import { Text } from "../components/Text";
 import { useTask } from "../hooks/useTask";
 import { type Task, TaskState } from "../models/task";
 
 interface TaskItemProps {
 	task: Task;
+	loading?: boolean;
 }
 
-export function TaskItem({ task }: TaskItemProps) {
+export function TaskItem({ task, loading }: TaskItemProps) {
 	const [isEditing, setIsEditing] = useState(
 		task?.state === TaskState.Creating
 	);
 	const [taskTitle, setTaskTitle] = useState(task?.title || "");
-	const { deleteTask, updateTask, updateTaskStatus } = useTask();
-
-	function handleChangeTaskTitle(e: ChangeEvent<HTMLInputElement>) {
-		setTaskTitle(e.target.value || "");
-	}
-
-	function handleSaveTask(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		updateTask(task.id, { title: taskTitle });
-		setIsEditing(false);
-	}
+	const {
+		deleteTask,
+		updateTask,
+		updateTaskStatus,
+		isDeletingTask,
+		isUpdatingTask,
+	} = useTask();
 
 	function handleEditTask() {
 		setIsEditing(true);
+	}
+
+	function handleChangeTaskTitle(e: ChangeEvent<HTMLInputElement>) {
+		setTaskTitle(e.target.value || "");
 	}
 
 	function handleExitEditTask() {
@@ -44,13 +46,19 @@ export function TaskItem({ task }: TaskItemProps) {
 		setIsEditing(false);
 	}
 
+	async function handleSaveTask(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		await updateTask(task.id, { title: taskTitle });
+		setIsEditing(false);
+	}
+
 	function handleChangeTaskStatus(e: ChangeEvent<HTMLInputElement>) {
 		const checked = e.target.checked;
 		updateTaskStatus(task.id, checked);
 	}
 
-	function handleDeleteTask() {
-		deleteTask(task.id);
+	async function handleDeleteTask() {
+		await deleteTask(task.id);
 	}
 
 	return (
@@ -60,24 +68,32 @@ export function TaskItem({ task }: TaskItemProps) {
 					<InputCheckbox
 						checked={task?.concluded ?? false}
 						onChange={handleChangeTaskStatus}
+						loading={loading}
 					/>
-					<Text
-						className={cx("flex-1", {
-							"line-through !text-gray-300": task?.concluded,
-						})}
-					>
-						{task?.title}
-					</Text>
+					{!loading ? (
+						<Text
+							className={cx("flex-1", {
+								"line-through !text-gray-300": task?.concluded,
+							})}
+						>
+							{task?.title}
+						</Text>
+					) : (
+						<Skeleton className="flex-1 h-6" />
+					)}
 					<div className="flex gap-1">
 						<ButtonIcon
 							icon={TrashIcon}
 							variant="tertiary"
 							onClick={handleDeleteTask}
+							loading={loading}
+							handling={isDeletingTask}
 						/>
 						<ButtonIcon
 							icon={PencilIcon}
 							variant="tertiary"
 							onClick={handleEditTask}
+							loading={loading}
 						/>
 					</div>
 				</div>
@@ -97,7 +113,12 @@ export function TaskItem({ task }: TaskItemProps) {
 							variant="secondary"
 							onClick={handleExitEditTask}
 						/>
-						<ButtonIcon type="submit" icon={CheckIcon} variant="primary" />
+						<ButtonIcon
+							type="submit"
+							icon={CheckIcon}
+							variant="primary"
+							handling={isUpdatingTask}
+						/>
 					</div>
 				</form>
 			)}
