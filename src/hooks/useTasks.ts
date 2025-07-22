@@ -1,7 +1,7 @@
 import useLocalStorage from "use-local-storage";
 import { TASKS_KEY, type Task } from "../models/task";
 
-export function useTask() {
+export function useTasks() {
 	const [tasks] = useLocalStorage<Task[]>(TASKS_KEY, []);
 
 	return {

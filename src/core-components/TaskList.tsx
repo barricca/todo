@@ -1,15 +1,23 @@
 import PlusIcon from "../assets/icons/plus.svg?react";
 import { Button } from "../components/Button";
-import { useTask } from "../hooks/use-task";
+import { useTask } from "../hooks/useTask";
+import { useTasks } from "../hooks/useTasks";
 import { TaskItem } from "./TaskItem";
 
 export function TaskList() {
-	const { tasks } = useTask();
-	console.log("tasks", tasks);
+	const { tasks } = useTasks();
+	const { prepareTask } = useTask();
+
+	console.log(tasks);
+
+	function handleNewTask() {
+		prepareTask();
+	}
+
 	return (
 		<>
 			<section>
-				<Button icon={PlusIcon} className="w-full">
+				<Button icon={PlusIcon} className="w-full" onClick={handleNewTask}>
 					Nova Tarefa
 				</Button>
 			</section>
