@@ -42,5 +42,9 @@ export function useTask() {
 		);
 	}
 
-	return { prepareTask, updateTask, updateTaskStatus };
+	function deleteTask(id: string) {
+		setTasks(tasks.filter((task) => task.id !== id));
+	}
+
+	return { prepareTask, updateTask, updateTaskStatus, deleteTask };
 }
