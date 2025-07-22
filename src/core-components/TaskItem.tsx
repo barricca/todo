@@ -9,6 +9,7 @@ import { Card } from "../components/Card";
 import { InputCheckbox } from "../components/InputCheckbox";
 import { InputText } from "../components/InputText";
 import { Text } from "../components/Text";
+import { useTask } from "../hooks/useTask";
 import { type Task, TaskState } from "../models/task";
 
 interface TaskItemProps {
@@ -19,7 +20,8 @@ export function TaskItem({ task }: TaskItemProps) {
 	const [isEditing, setIsEditing] = useState(
 		task?.state === TaskState.Creating
 	);
-	const [taskTitle, setTaskTitle] = useState("");
+	const [taskTitle, setTaskTitle] = useState(task?.title || "");
+	const { updateTask } = useTask();
 
 	function handleChangeTaskTitle(e: ChangeEvent<HTMLInputElement>) {
 		setTaskTitle(e.target.value || "");
@@ -27,7 +29,7 @@ export function TaskItem({ task }: TaskItemProps) {
 
 	function handleSaveTask(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		console.log({ id: task.id, title: taskTitle });
+		updateTask(task.id, { title: taskTitle });
 		setIsEditing(false);
 	}
 
@@ -66,6 +68,7 @@ export function TaskItem({ task }: TaskItemProps) {
 			) : (
 				<form onSubmit={handleSaveTask} className="flex items-center gap-4">
 					<InputText
+						value={taskTitle}
 						className="flex-1"
 						onChange={handleChangeTaskTitle}
 						required
